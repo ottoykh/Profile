@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yu Kai Him Otto - Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#4A2C2A', // Dark brown
+                        accent: '#8B4513',  // Lighter brown (saddlebrown)
+                        light: '#f9f9f9',   // Light background for sections
+                    },
+                },
+            },
+        };
+    </script>
+    <style>
+        /* Existing styles remain the same */
+        #gallery img {
+            max-height: 450px; /* Limit image height */
+        }
+        #experience {
+            font-family: Arial, sans-serif;
+        }
+        .text-primary {
+            color: #3490dc;
+        }
+        .border-b {
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .pb-2 {
+            padding-bottom: 0.5rem;
+        }
+        .space-y-3 > * + * {
+            margin-top: 1rem;
+        }
+        .flex {
+            display: flex;
+            align-items: center;
+        }
+        .justify-between {
+            justify-content: space-between;
+        }
+        /* Sticky Navigation */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(5px);
+        }
+        /* Carousel Indicators */
+        .carousel-indicators {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+        }
+        .carousel-indicators span {
+            width: 10px;
+            height: 10px;
+            background-color: #ccc;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .carousel-indicators span.active {
+            background-color: #4A2C2A;
+        }
+        /* Smooth Section Transitions */
+        section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* Hover Effects */
+        nav a {
+            transition: color 0.3s, transform 0.3s;
+        }
+        nav a:hover {
+            transform: scale(1.05);
+        }
+
+        /* NEW STYLES FOR IMPROVED EXPERIENCE SECTION */
+        .experience-card {
+            border-left: 4px solid #8B4513;
+            transition: all 0.3s ease;
+        }
+        .experience-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        .skill-tag {
+            display: inline-block;
+            background-color: #f3f4f6;
+            color: #4A2C2A;
+            padding: 0.25rem 0.5rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            margin: 0.25rem;
+        }
+        .timeline-dot {
+            width: 12px;
+            height: 12px;
+            background-color: #8B4513;
+            border-radius: 50%;
+            position: absolute;
+            left: -26px;
+            top: 6px;
+        }
+        .timeline-connector {
+            position: absolute;
+            left: -21px;
+            top: 18px;
+            bottom: -10px;
+            width: 2px;
+            background-color: #e5e7eb;
+        }
+        .company-logo {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+            margin-right: 12px;
+            border-radius: 4px;
+            background-color: white;
+            padding: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            #gallery .md\\:w-2/3, #gallery .md\\:w-1/3 {
+                width: 100%;
+            }
+            #gallery img {
+                max-height: 300px;
+            }
+            .carousel-indicators {
+                bottom: 5px;
+            }
+            .experience-card {
+                margin-left: 0;
+                padding-left: 1rem;
+            }
+            .timeline-dot {
+                left: -6px;
+            }
+            .timeline-connector {
+                left: -1px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-light font-sans">
+    <!-- Header -->
+    <header class="bg-primary text-white py-6">
+        <div class="container mx-auto px-4 flex items-center">
+            <img src="https://media.licdn.com/dms/image/v2/D4E03AQHdDTvtY7ciIA/profile-displayphoto-shrink_800_800/B4EZcADjDoGoAc-/0/1748052622505?e=1761177600&v=beta&t=gpQ7koAcsawXMsKIWCjGl-F3IAS2XMGCd175giEtbr0" alt="Yu Kai Him Otto Profile Photo" class="w-20 h-20 rounded-full border-4 border-white mr-4">
+            <div class="text-left">
+                <h1 class="text-2xl font-bold">Yu Kai Him Otto</h1>
+                <p class="text-md">Land Surveying Graduate</p>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8 space-y-8">
+        <!-- Photo Gallery -->
+        <section id="gallery" class="bg-white rounded-lg shadow-lg p-6 flex flex-col md:flex-row">
+            <div class="w-full md:w-2/3">
+                <h2 class="text-2xl font-semibold text-primary mb-4">Photo Gallery</h2>
+                <div class="relative overflow-hidden">
+                    <div id="carousel" class="flex transition-transform duration-500 ease-in-out" role="region" aria-label="Photo gallery carousel">
+                        <!-- Slides -->
+                        <div class="flex-shrink-0 w-full">
+                            <img src="image/tree.svg" alt="Leaf-wood segmentation" class="w-full h-auto object-cover rounded-lg">
+                            <p class="text-center text-sm mt-2">Leaf-wood segmentation of the Terrestrial Laser Scanning Point Cloud</p>
+                        </div>
+                        <div class="flex-shrink-0 w-full">
+                            <img src="image/panosam.svg" alt="Pano2Map" class="w-full h-auto object-cover rounded-lg">
+                            <p class="text-center text-sm mt-2">Pano2Map: Geospatial Textural Mining from Panoramic Street-view Imagery</p>
+                        </div>
+                        <div class="flex-shrink-0 w-full">
+                            <img src="image/wind.svg" alt="Realtime Dashboard" class="w-full h-auto object-cover rounded-lg">
+                            <p class="text-center text-sm mt-2">Realtime Dynamic Dashboard Prototype from Open Meteorological data</p>
+                        </div>
+                        <div class="flex-shrink-0 w-full">
+                            <img src="image/tide.svg" alt="Tide Data Analysis" class="w-full h-auto object-cover rounded-lg">
+                            <p class="text-center text-sm mt-2">Tide data analysis: Visualisation of Storm Surge</p>
+                        </div>
+                        <div class="flex-shrink-0 w-full">
+                            <img src="image/gvi.svg" alt="Canopy Dynamics" class="w-full h-auto object-cover rounded-lg">
+                            <p class="text-center text-sm mt-2">Canopy Dynamics: Regional study in Hong Kong of the Green view index changes from Google Street view imageries</p>
+                        </div>
+                    </div>
+                    <!-- Navigation Arrows -->
+                    <button id="prev" class="absolute left-2 top-1/2 transform -translate-y-1/2 bg-primary text-white p-2 rounded-full hover:bg-accent" aria-label="Previous slide">←</button>
+                    <button id="next" class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-primary text-white p-2 rounded-full hover:bg-accent" aria-label="Next slide">→</button>
+                    <!-- Carousel Indicators -->
+                    <div class="carousel-indicators" role="tablist">
+                        <span role="tab" aria-label="Slide 1" data-slide="0"></span>
+                        <span role="tab" aria-label="Slide 2" data-slide="1"></span>
+                        <span role="tab" aria-label="Slide 3" data-slide="2"></span>
+                        <span role="tab" aria-label="Slide 4" data-slide="3"></span>
+                        <span role="tab" aria-label="Slide 5" data-slide="4"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="w-full md:w-1/3 p-4">
+                <h2 class="text-2xl font-semibold text-primary mb-4">About me</h2>
+                <p class="text-sm">
+                    I am a recent graduate with a BSc in Land Surveying and Geo-informatics from PolyU. My passion lies in remote sensing and forestry, with a particular focus on lidar and close-range remote sensing technologies. My academic background includes land surveying, geoscience, tree management, and computer science. During my studies, I worked on various projects related to system development, environmental research, data retrieval, and the application of AI in GIS and urban analysis. I am equipped with technical skills in land surveying, GIS, programming, AI/ML development, and proficiency in languages such as R, MATLAB, Java, and Python.
+                </p>
+            </div>
+        </section>
+
+        <!-- Navigation -->
+        <nav class="flex flex-wrap justify-center gap-4 bg-white p-4 rounded-lg shadow-lg" role="navigation" aria-label="Main navigation">
+            <a href="#education" class="text-primary hover:text-accent">Education</a>
+            <a href="#experience" class="text-primary hover:text-accent">Experience</a>
+            <a href="#volunteering" class="text-primary hover:text-accent">Volunteering</a>
+            <a href="#scholarships" class="text-primary hover:text-accent">Scholarships</a>
+            <a href="#awards" class="text-primary hover:text-accent">Awards</a>
+            <a href="#membership" class="text-primary hover:text-accent">Membership</a>
+            <a href="#projects" class="text-primary hover:text-accent">Projects</a>
+            <a href="#gallery" class="text-primary hover:text-accent">Photo Gallery</a>
+        </nav>
+
+        <!-- Education -->
+        <section id="education" class="bg-white rounded-lg shadow-lg p-6">
+            <h2 class="text-2xl font-semibold text-primary mb-4">Education</h2>
+            <ul class="list-disc pl-6 space-y-1">
+                <li>Bachelor of Science (Honours) in Land Surveying and Geo-Informatics (First Class Honours)</li>
+                <li>Professional Diploma in Tree Management</li>
+                <li>Certificate of BIM Management Training</li>
+            </ul>
+        </section>
+
+        <!-- Experience - IMPROVED SECTION -->
+        <section id="experience" class="bg-white rounded-lg shadow-lg p-6">
+            <h2 class="text-2xl font-semibold text-primary mb-6">Experience</h2>
+
+            <div class="relative ml-8">
+                <!-- Timeline connector -->
+                <div class="timeline-connector"></div>
+
+                <!-- Experience 1 -->
+                <div class="experience-card bg-white p-6 rounded-lg shadow-md mb-6 relative">
+                    <div class="timeline-dot"></div>
+                    <div class="flex items-start justify-between mb-2">
+                        <div class="flex items-center">
+                            <img src="https://logo.clearbit.com/polyu.edu.hk" alt="PolyU Logo" class="company-logo" onerror="this.src='https://via.placeholder.com/40x40?text=PU'">
+                            <div>
+                                <h3 class="text-lg font-semibold text-primary">Research Assistant</h3>
+                                <p class="text-accent font-medium">The Hong Kong Polytechnic University</p>
+                            </div>
+                        </div>
+                        <span class="text-sm text-gray-500 bg-gray-100 px-2 py-1 rounded">Jun 2025 - Sep 2025 · 4 mos</span>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-3 italic">Phenological Monitoring of Urban Trees' Leaf Area Density: from Terrestrial to Mobile Laser Scanning</p>
+                    <ul class="list-disc pl-5 text-sm space-y-1 mb-4">
+                        <li>Conducted, processed, and analyzed data from terrestrial laser scanning and mobile mapping systems</li>
+                        <li>Developed methodologies for tracking leaf changes by deriving relevant indices and techniques</li>
+                        <li>Implemented graph-based, machine learning, and CNN segmentation techniques for leaf and wood separation</li>
+                        <li>Created instructional materials on data collection, registration, and processing techniques</li>
+                        <li>Built a database library of tree species derived from point cloud data</li>
+                    </ul>
+                    <div class="flex flex-wrap">
+                        <span class="skill-tag">LiDAR</span>
+                        <span class="skill-tag">Point Cloud Analysis</span>
+                        <span class="skill-tag">Machine Learning</span>
+                        <span class="skill-tag">CNN</span>
+                        <span class="skill-tag">Data Processing</span>
+                    </div>
+                </div>
+
+                <!-- Experience 2 -->
+                <div class="experience-card bg-white p-6 rounded-lg shadow-md mb-6 relative">
+                    <div class="timeline-dot"></div>
+                    <div class="flex items-start justify-between mb-2">
+                        <div class="flex items-center">
+                            <img src="https://logo.clearbit.com/polyu.edu.hk" alt="PolyU Logo" class="company-logo" onerror="this.src='https://via.placeholder.com/40x40?text=PU'">
+                            <div>
+                                <h3 class="text-lg font-semibold text-primary">Student Assistant</h3>
+                                <p class="text-accent font-medium">The Hong Kong Polytechnic University</p>
+                            </div>
+                        </div>
+                        <span class="text-sm text-gray-500 bg-gray-100 px-2 py-1 rounded">Apr 2025 - Jun 2025 · 3 mos</span>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-3 italic">Quantifying Airborne LiDAR Data Artifacts</p>
+                    <div class="flex flex-wrap">
+                        <span class="skill-tag">LiDAR</span>
+                        <span class="skill-tag">Data Quality</span>
+                        <span class="skill-tag">Analysis</span>
+                    </div>
+                </div>
+
+                <!-- Experience 3 -->
+                <div class="experience-card bg-white p-6 rounded-lg shadow-md mb-6 relative">
+                    <div class="timeline-dot"></div>
+                    <div class="flex items-start justify-between mb-2">
+                        <div class="flex items-center">
+                            <img src="https://logo.clearbit.com/devb.gov.hk" alt="DEVB Logo" class="company-logo" onerror="this.src='https://via.placeholder.com/40x40?text=GOV'">
+                            <div>
+                                <h3 class="text-lg font-semibold text-primary">Intern</h3>
+                                <p class="text-accent font-medium">Development Bureau, HKSAR Government</p>
+                            </div>
+                        </div>
+                        <span class="text-sm text-gray-500 bg-gray-100 px-2 py-1 rounded">Jul 2024 - Aug 2024 · 2 mos</span>
+                    </div>
+                    <p class="text-sm text-gray-600 mb-3 italic">Spatial Data Office / Common Spatial Data Infrastructure</p>
+                    <ul class="list-disc pl-5 text-sm space-y-1 mb-4">
+                        <li>Prototyped AI tools to improve SDO/CSDI services and address-related enhancements</li>
+                        <li>Estimated subdivided units through water consumption analysis and developed validation solutions</li>
+                        <li>Implemented dynamic data fetching from CSDI portal and suggested improvement solutions</li>
+                        <li>Analyzed CSDI framework datasets to discover potential linkages between data</li>
+                    </ul>
+                    <div class="flex flex-wrap">
+                        <span class="skill-tag">GIS</span>
+                        <span class="skill-tag">Spatial Analysis</span>
+                        <span class="skill-tag">AI Prototyping</span>
+                        <span class="skill-tag">Data Analysis</span>
+                    </div>
+                </div>
+
+                <!-- Experience 4 -->
+                <div class="experience-card bg-white p-6 rounded-lg shadow-md mb-6 relative">
+                    <div class="timeline-dot"></div>
+                    <div class="flex items-start justify-between mb-2">
+                        <div class="flex items-center">
+                            <img src="https://www.hkstp.org/-/media/corpsite/assets/company-directory/images/information-communications-technology/lidarist-company-limitedlidarist-logo-v2.png?mw=1980&rev=a8b16416a9db426496f31616a4d92971&hash=E924A58AACF19402B6213C083FFF2148" alt="Lidarist Logo" class="company-logo" onerror="this.src='https://via.placeholder.com/40x40?text=LID'">
+                            <div>
+                                <h3 class="text-lg font-semibold text-primary">Junior Data Scientist (Intern)</h3>
+                                <p class="text-accent font-medium">Lidarist Company Limited</p>
+                            </div>
+                        </div>
+                        <span class="text-sm text-gray-500 bg-gray-100 px-2 py-1 rounded">May 2023 - Aug 2023 · 4 mos</span>
+                    </div>
+                    <ul class="list-disc pl-5 text-sm space-y-1 mb-4">
+                        <li>Performed point cloud pre-processing and labelling</li>
+                        <li>Developed automated road settlement monitoring systems</li>
+                        <li>Implemented deformation monitoring with reflectorless total station</li>
+                    </ul>
+                    <div class="flex flex-wrap">
+                        <span class="skill-tag">Point Cloud</span>
+                        <span class="skill-tag">Deformation Monitoring</span>
+                        <span class="skill-tag">Data Science</span>
+                    </div>
+                </div>
+
+                <!-- Experience 5 -->
+                <div class="experience-card bg-white p-6 rounded-lg shadow-md mb-6 relative">
+                    <div class="timeline-dot"></div>
+                    <div class="flex items-start justify-between mb-2">
+                        <div class="flex items-center">
+                            <img src="https://logo.clearbit.com/polyu.edu.hk" alt="PolyU Logo" class="company-logo" onerror="this.src='https://via.placeholder.com/40x40?text=PU'">
+                            <div>
+                                <h3 class="text-lg font-semibold text-primary">Student Assistant</h3>
+                                <p class="text-accent font-medium">The Hong Kong Polytechnic University</p>
+                            </div>
+                        </div>
+                        <span class="text-sm text-gray-500 bg-gray-100 px-2 py-1 rounded">Nov 2022 - Aug 2023 · 10 mos</span>
+                    </div>
+                    <ul class="list-disc pl-5 text-sm space-y-1 mb-4">
+                        <li>Supported remote sensing lab field work focused on tree survey and urban forestry</li>
+                        <li>Contributed to a study of carbon sequestration in Hong Kong's vegetation</li>
+                        <li>Assisted with LSGI computer lab updates, renovations, and maintenance</li>
+                    </ul>
+                    <div class="flex flex-wrap">
+                        <span class="skill-tag">Remote Sensing</span>
+                        <span class="skill-tag">Carbon Sequestration</span>
+                        <span class="skill-tag">Lab Support</span>
+                    </div>
+                </div>
+
+                <!-- Experience 6 -->
+                <div class="experience-card bg-white p-6 rounded-lg shadow-md relative">
+                    <div class="timeline-dot"></div>
+                    <div class="flex items-start justify-between mb-2">
+                        <div class="flex items-center">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXQwJqWUsD3hirCiXkdtNY6psRQTENw8mxgA&s" alt="Ambit Geospatial Logo" class="company-logo">
+                            <div>
+                                <h3 class="text-lg font-semibold text-primary">Assistant Geospatial Analyst</h3>
+                                <p class="text-accent font-medium">Ambit Geospatial</p>
+                            </div>
+                        </div>
+                        <span class="text-sm text-gray-500 bg-gray-100 px-2 py-1 rounded">Nov 2022 - Dec 2022 · 2 mos</span>
+                    </div>
+                    <ul class="list-disc pl-5 text-sm space-y-1 mb-4">
+                        <li>Conducted a pilot study of photorealistic and laser scanning of man-made slopes in roadside areas</li>
+                        <li>Performed GNSS control point and tie point (RTK) surveying for modeling applications</li>
+                    </ul>
+                    <div class="flex flex-wrap">
+                        <span class="skill-tag">GNSS</span>
+                        <span class="skill-tag">RTK Surveying</span>
+                        <span class="skill-tag">Laser Scanning</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Other sections remain the same -->
+        <!-- Volunteering -->
+        <section id="volunteering" class="bg-white rounded-lg shadow-lg p-6">
+            <h2 class="text-2xl font-semibold text-primary mb-4">Volunteering Work</h2>
+            <ul class="list-disc pl-6 space-y-1">
+                <li>Ambassador, Limitless Ambassador Programme</li>
+                <li>Student Representative, Library Student Liaison Group</li>
+            </ul>
+        </section>
+
+        <!-- Scholarships -->
+        <section id="scholarships" class="bg-white rounded-lg shadow-lg p-6">
+            <h2 class="text-2xl font-semibold text-primary mb-4">Scholarships</h2>
+            <ul class="list-disc pl-6 space-y-1">
+                <li>The Hong Kong Institute of Surveyors Scholarship 2024/25 (First Prize)</li>
+                <li>The Hong Kong Polytechnic University Scholarship 2024/25</li>
+                <li>SINOPEC "Cleaner Energy Better Life" Scholarship 2024/25</li>
+                <li>HKSAR Government Talent Development Scholarship 2023/24</li>
+                <li>Dr Winnie S M Tang-PolyU Innovation & Entrepreneurship Scholarship 2022</li>
+            </ul>
+        </section>
+
+        <!-- Awards -->
+        <section id="awards" class="bg-white rounded-lg shadow-lg p-6">
+            <h2 class="text-2xl font-semibold text-primary mb-4">Awards</h2>
+            <ul class="list-disc pl-6 space-y-1">
+                <li>Champion, Esri Young Scholars Award 2023 (Group)</li>
+                <li>PolyU Outstanding Work by Students</li>
+                <li>2nd Runner-Up & Best Social Impact Award, AI x HK OpenCup 2023</li>
+                <li>Merit, CSDI Award 2023</li>
+                <li>Outstanding Teams, PolyU Entrepreneurial Proof-of-Concept 2022</li>
+                <li>Finalist, YDC Dare To Change Business Pitch Competition 2022-2023</li>
+                <li>一等獎, 苏港澳高校遥感制图分析与学术能力竞赛</li>
+                <li>二等獎, 第二届苏港澳高校遥感制图分析与学术能力竞赛</li>
+            </ul>
+        </section>
+
+        <!-- Membership -->
+        <section id="membership" class="bg-white rounded-lg shadow-lg p-6">
+            <h2 class="text-2xl font-semibold text-primary mb-4">Membership</h2>
+            <ul class="list-disc pl-6 space-y-1">
+                <li>Hong Kong Geographic Information System Association</li>
+                <li>PolyU Entrepreneurship Society</li>
+                <li>Ex. Student Member, GIS Academy</li>
+            </ul>
+        </section>
+
+        <!-- Projects -->
+        <section id="projects" class="bg-white rounded-lg shadow-lg p-6">
+            <h2 class="text-2xl font-semibold text-primary mb-4">Projects</h2>
+            <div class="space-y-4">
+                <details open>
+                    <summary class="text-lg font-semibold text-primary cursor-pointer">Computer Science & Programming</summary>
+                    <ul class="list-disc pl-6 space-y-1">
+                        <li>Address Lookup Service Improvement and Enhancement</li>
+                        <li>Bioacoustics: Bird Species Detection from Soundtracks</li>
+                        <li>Tide Data Analysis: Storm Surge Visualization</li>
+                        <li>NLP: Free Text to Geolocation</li>
+                        <li>Realtime Dashboard from Open Meteorological Data</li>
+                        <li>Realtime CCTV Traffic Monitoring with Machine Learning</li>
+                        <li>Retrieval-Augmented Generation Implementation</li>
+                        <li>Subdivided Units Estimation in Hong Kong</li>
+                        <li>Dynamic Data Fetching from CSDI Portal</li>
+                    </ul>
+                </details>
+                <details open>
+                    <summary class="text-lg font-semibold text-primary cursor-pointer">Remote Sensing</summary>
+                    <ul class="list-disc pl-6 space-y-1">
+                        <li>Pano2Map: Geospatial Textural Mining from Street-View</li>
+                        <li>PanoSAM: Unsupervised Segmentation for Point Cloud Data</li>
+                        <li>Canopy Dynamics: Green View Index Study</li>
+                        <li>GNSS-Interferometric Reflectometry Pipeline</li>
+                        <li>GPS Single Point Positioning</li>
+                        <li>Photogrammetric Historical Reconstruction</li>
+                    </ul>
+                </details>
+                <details open>
+                    <summary class="text-lg font-semibold text-primary cursor-pointer">Environment</summary>
+                    <ul class="list-disc pl-6 space-y-1">
+                        <li>Tree Reconstruction: Laser Scanning to Branching System</li>
+                        <li>Tree Defects Diagnosis with AI</li>
+                        <li>Hiking Sustainability: Suburban Terrain Impact</li>
+                    </ul>
+                </details>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-primary text-white text-center py-4">
+        <p>&copy; 2025 Yu Kai Him Otto</p>
+    </footer>
+
+    <!-- JavaScript for Smooth Scrolling, Carousel, and Section Animations -->
+    <script>
+        // Smooth Scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Carousel Functionality
+        const carousel = document.getElementById('carousel');
+        const prevBtn = document.getElementById('prev');
+        const nextBtn = document.getElementById('next');
+        const indicators = document.querySelectorAll('.carousel-indicators span');
+        let currentIndex = 0;
+        const slides = carousel.children.length;
+        let autoSlideInterval;
+
+        function showSlide(index) {
+            if (index >= slides) currentIndex = 0;
+            else if (index < 0) currentIndex = slides - 1;
+            else currentIndex = index;
+            carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
+            updateIndicators();
+        }
+
+        function updateIndicators() {
+            indicators.forEach((indicator, i) => {
+                indicator.classList.toggle('active', i === currentIndex);
+                indicator.setAttribute('aria-selected', i === currentIndex);
+            });
+        }
+
+        // Auto-slide every 3 seconds
+        function startAutoSlide() {
+            autoSlideInterval = setInterval(() => {
+                showSlide(currentIndex + 1);
+            }, 3000);
+        }
+
+        function stopAutoSlide() {
+            clearInterval(autoSlideInterval);
+        }
+
+        // Manual navigation
+        nextBtn.addEventListener('click', () => {
+            stopAutoSlide();
+            showSlide(currentIndex + 1);
+            startAutoSlide();
+        });
+
+        prevBtn.addEventListener('click', () => {
+            stopAutoSlide();
+            showSlide(currentIndex - 1);
+            startAutoSlide();
+        });
+
+        // Indicator navigation
+        indicators.forEach(indicator => {
+            indicator.addEventListener('click', () => {
+                stopAutoSlide();
+                showSlide(parseInt(indicator.getAttribute('data-slide')));
+                startAutoSlide();
+            });
+        });
+
+        // Pause on hover
+        carousel.parentElement.addEventListener('mouseenter', stopAutoSlide);
+        carousel.parentElement.addEventListener('mouseleave', startAutoSlide);
+
+        // Keyboard navigation
+        carousel.parentElement.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') {
+                stopAutoSlide();
+                showSlide(currentIndex - 1);
+                startAutoSlide();
+            } else if (e.key === 'ArrowRight') {
+                stopAutoSlide();
+                showSlide(currentIndex + 1);
+                startAutoSlide();
+            }
+        });
+
+        // Start auto-slide
+        startAutoSlide();
+
+        // Section Animations
+        const sections = document.querySelectorAll('section');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>
